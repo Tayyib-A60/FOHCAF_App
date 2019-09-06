@@ -2,7 +2,8 @@ export const BlogPostActionTypes = {
     CREATE_BLOG_POST: 'CREATE_BLOG_POST',
     FETCH_BLOG_POSTS: 'FETCH_BLOG_POSTS',
     FETCH_BLOG_POST: 'FETCH_BLOG_POST',
-    UPLOAD_PHOTO: 'UPLOAD_PHOTO'
+    UPLOAD_PHOTO: 'UPLOAD_PHOTO',
+    DELETE_BLOG_POST: 'DELETE_BLOG_POST'
 };
 
 export default BlogPostActionTypes;

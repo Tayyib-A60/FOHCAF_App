@@ -29,6 +29,17 @@ namespace API.Controllers
             await _repository.SaveAllChanges();
             return Ok();
         }
+        [HttpPost("postComment")]
+        public async Task<IActionResult> PostComment([FromBody] CommentDTO commentDTO)
+        {
+            var commentToPost = _mapper.Map<Comment>(commentDTO);
+            if(await _repository.EntityExists(commentToPost)) {
+                return BadRequest("This comment has already been made");
+            }
+            _repository.Add(commentToPost);
+            await _repository.SaveAllChanges();
+            return Ok();
+        }
         [HttpDelete("deleteBlogPost/{blogPostId}")]
         public async Task<IActionResult> DeleteBlogPost(int blogPostId)
         {
@@ -36,18 +47,30 @@ namespace API.Controllers
             if(blogPostToDelete == null)
                 return BadRequest("BlogPost does not exist");
             _repository.Delete(blogPostToDelete);
-            var success = await _repository.SaveAllChanges();
-            return Ok(success);
+            await _repository.SaveAllChanges();
+            return Ok();
+        }
+        [HttpDelete("deleteComment/{commentId}/{blogPostId}")]
+        public async Task<IActionResult> DeleteComment(int commentId, int blogPostId)
+        {
+            var commentToDelete = await _repository.GetComment(commentId);
+            if(commentToDelete == null)
+                return BadRequest("Comment does not exist");
+            _repository.Delete(commentToDelete);
+            await _repository.SaveAllChanges();
+            return Ok();
         }
         [HttpPut("updateBlogPost/{blogPostId}")]
-        public IActionResult UpdateBlogPost(int blogPostId, [FromBody] BlogPostDTO blogPostDTO) 
+        public async Task<IActionResult> UpdateBlogPost(int blogPostId, [FromBody] BlogPostDTO blogPostDTO) 
         {
-            if(blogPostId != blogPostDTO.Id)
-                return BadRequest("Blogpost not found");
-            var blogPostToUpdate = _mapper.Map<BlogPost>(blogPostDTO);
+            // if(blogPostId != blogPostDTO.Id)
+            //     return BadRequest("Blogpost not found");
+            var blogPost = await _repository.GetBlogPost(blogPostId);
+            var blogPostToUpdate = _mapper.Map<BlogPostDTO, BlogPost>(blogPostDTO, blogPost);
             if(blogPostToUpdate == null)
                 return NotFound();
             _repository.Update(blogPostToUpdate);
+            await _repository.SaveAllChanges();
             return Ok();
         }
         [HttpGet("getBlogPost/{blogPostId}")]
@@ -64,11 +87,20 @@ namespace API.Controllers
             var blogPosts = await _repository.GetBlogPosts(queryParams);
             return Ok(blogPosts);
         }
+        [HttpGet("getComments/{id}")]
+        public async Task<IActionResult> GetComments([FromQuery] CommentQuery commentQuery, int id)
+        {
+            var comments = await _repository.GetComments(id, commentQuery);
+            return Ok(comments);
+        }
         [HttpPost("subscribe")]
-        public IActionResult AddSubscriber([FromForm] SubscriberDTO subscriberDTO)
+        public async Task<IActionResult> AddSubscriber([FromBody] SubscriberDTO subscriberDTO)
         {
             var subscriberToCreate = _mapper.Map<Subscriber>(subscriberDTO);
+            if(await _repository.EntityExists(subscriberToCreate))
+                return BadRequest("You have already been added to our subscription list, thank you");
             _repository.Add(subscriberToCreate);
+            await _repository.SaveAllChanges();
             return Ok();
         }
         [HttpPost("broadcastToSubscribers")]
@@ -79,7 +111,7 @@ namespace API.Controllers
             foreach (var subscriber in subscribers)
             {
                 broadcastMessage.To.Email = subscriber.Email;
-                broadcastMessage.To.Name = subscriber.FullName;
+                broadcastMessage.To.Name = "";
                 try
                 {
                     _repository.EmailSender(broadcastMessage);

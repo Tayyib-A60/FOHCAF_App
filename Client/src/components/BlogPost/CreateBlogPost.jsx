@@ -11,16 +11,29 @@ import {
     InputGroup
   } from "reactstrap";
 
-import { createBlogPostAPI } from '../../apis/fohcafapis';
+import { createBlogPostAPI, fetchBlogPostAPI, updateBlogPostAPI } from '../../apis/fohcafapis';
+import { CreateBlogPost } from '../../redux/blog-posts/blog-post.actions';
 import './CreateBlogPost.styles.scss';
+import { connect } from 'react-redux';
 
-class CreateBlogPost extends React.Component {
+class CreateBlog extends React.Component {
     state = {
         author: '',
         heading: '',
         body: '',
-        createNew: true
+        createNew: true,
+        id: null
     };
+    async componentDidMount() {
+        console.log(this.props);
+        
+        if(this.props.match) {
+            const blogPostId = this.props.match.params.id;
+            const res = await fetchBlogPostAPI(blogPostId);
+            const { author, heading, body, id } = res.data;
+            this.setState({ author, heading, body, id, createNew: false });
+        }
+    }
 
     handleChange = (event) => {
         const { value, name } = event.target;
@@ -33,12 +46,18 @@ class CreateBlogPost extends React.Component {
         const { author, heading, body } = this.state;
         if (this.state.createNew) {
           const blogPostCreated = await createBlogPostAPI({ author, heading, body });
+          this.props.createBlogPost(blogPostCreated.data);
           console.log(blogPostCreated);
-          return blogPostCreated;
+        //   return blogPostCreated;
+        }
+        else if(this.state.createNew === false) {
+            const blogPostUpdated = await updateBlogPostAPI(this.state.id, { author, heading, body, id: this.state.id });
+            console.log(blogPostUpdated.data);
         }
       };
 
         render() {
+            const { author, heading, body } = this.state;
              return (
                 <>
                 <div className="createBlogSection section-contact-us" style={{backgroundColor: '#2c2c2c !important', }} data-background-color="black">
@@ -55,6 +74,7 @@ class CreateBlogPost extends React.Component {
                         name='author'
                         placeholder="Enter author's name"
                         type="text"
+                        value={author}
                         onChange={this.handleChange}
                         >
                     </Input>
@@ -65,6 +85,7 @@ class CreateBlogPost extends React.Component {
                         aria-describedby="heading"
                         id="heading"
                         name='heading'
+                        value={heading}
                         placeholder="Enter heading for the post"
                         type="text"
                         onChange={this.handleChange}
@@ -77,6 +98,7 @@ class CreateBlogPost extends React.Component {
                             name="body"
                             placeholder="The body of the blog post goes here..."
                             rows="15"
+                            value={body}
                             type="textarea"
                             onChange={this.handleChange}
                             ></Input>
@@ -94,5 +116,9 @@ class CreateBlogPost extends React.Component {
             );
         }
     }
+const mapDispatchToProps = dispatch => ({
+    createBlogPost: blogPost =>
+            dispatch(CreateBlogPost(blogPost))
+});
 
-export default CreateBlogPost;
+export default connect(null, mapDispatchToProps)(CreateBlog);

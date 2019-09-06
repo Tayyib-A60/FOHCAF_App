@@ -14,3 +14,7 @@ export const UploadBlogPostPhoto = photo => ({
     type: BlogPostActionTypes.UPLOAD_PHOTO,
     payload: photo
 });
+export const DeleteBlogPost = blogPostId => ({
+    type: BlogPostActionTypes.DELETE_BLOG_POST,
+    payload: blogPostId
+});

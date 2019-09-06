@@ -15,7 +15,7 @@ import {
     Col
   } from "reactstrap";
 
-import CreateBlogPost from '../../components/BlogPost/CreateBlogPost';
+import CreateBlog from '../../components/BlogPost/CreateBlogPost';
 import ManagePost from 'components/BlogPost/ManagePost';
 
 const ManageBlogPost = () => {
@@ -93,7 +93,7 @@ const ManageBlogPost = () => {
                             activeTab={"iconPills" + iconPills}
                         >
                         <TabPane tabId="iconPills1">
-                        <CreateBlogPost/>
+                        <CreateBlog/>
                         </TabPane>
                         <TabPane tabId="iconPills2">
                         <ManagePost />

@@ -14,6 +14,9 @@ import BlogPage from 'pages/BlogsPage/BlogsPage';
 import HomePageFooter from 'components/Footer/HomePageFooter';
 import UploadPhoto from './pages/AdminPages/UploadPhoto';
 import ManageBlogPost from './pages/AdminPages/ManageBlogPosts';
+import CreateBlog from './components/BlogPost/CreateBlogPost';
+import BlogDetailsPage from 'pages/BlogPage/BlogDetailsPage';
+import BlogDetails from 'components/BlogPost/BlogDetails';
 
 const App = () => (
     <div>
@@ -21,9 +24,11 @@ const App = () => (
         <Switch>
             <Route exact path='/' component={HomePage} />
             <Route exact path='/login' component={AdminLogin} />
-            <Route exact path='/blog' component={BlogPage} />
+            <Route exact path='/blogs' component={BlogPage} />
             <Route exact path='/manage' component={ManageBlogPost} />
+            <Route exact path='/editBlogPost/:id' component={CreateBlog} />
             <Route exact path='/uploadPhoto/:id' component={UploadPhoto} />
+            <Route exact path='/blog/:id' component={BlogDetails} />
       </Switch>
       <HomePageFooter/>
     </div>

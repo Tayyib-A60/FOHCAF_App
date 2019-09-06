@@ -43,16 +43,16 @@ class UploadPhoto extends React.Component {
     }
 
     renderPhoto = () => {
-        return this.state.photos.map(p => {
+        return this.state.photos.map(photo => {
             return (
-                <Col sm="2" className='space-between-pics'>
+                <Col key={photo.id} sm="2" className='space-between-pics'>
                     <img
                     alt="..."
                     className="rounded img-raised"
-                    src={require(`assets/img/${p.fileName}`)}
+                    src={require(`assets/img/${photo.fileName}`)}
                     ></img>
-                    <Button onClick={() => this.makeMainPhoto(p) } color='success' disabled={p.isMain}>IsMain</Button>
-                    <Button onClick={() => this.deletePhoto(p) } color='danger'>Delete</Button>
+                    <Button onClick={() => this.makeMainPhoto(photo) } color='success' disabled={photo.isMain}>IsMain</Button>
+                    <Button onClick={() => this.deletePhoto(photo) } color='danger'>Delete</Button>
                 </Col>
             );
         });
@@ -60,7 +60,7 @@ class UploadPhoto extends React.Component {
     makeMainPhoto = async (photo) => {
         const res = await makeMainPhotoAPI(photo.blogPostId, photo.id);
         if(res.status === 200) {
-            const currentMain = this.state.photos.filter(p => p.isMain === true)[0];
+            const currentMain = this.state.photos.filter(photo => photo.isMain === true)[0];
             photo.isMain = true;
             if(currentMain)
                 currentMain.isMain = false;
@@ -74,17 +74,19 @@ class UploadPhoto extends React.Component {
         }
         return (
             <>
-            <div className="section">
-                <div style={{ padding: '6rem' }}>
-                    <h2>Upload Photo</h2>
-                    <input type='file' className='btn' name='photo' onChange={this.handleChange} />
-                </div>
-                <div className="space-90">
-                    <div id="images">
-                        <Row>
-                            {this.renderPhoto()}
-                        </Row>
-                    </div>
+            <div style={{ padding: '10rem' }}>
+                {/* <label class="file">
+                    <input type="file"  onChange={this.handleChange} id="file" aria-label="File browser example"/>
+                    <span class="file-custom"></span>
+                </label> */}
+                {/* <i className="fas fa-upload"></i> */}
+                <input type='file' name='photo' onChange={this.handleChange} />
+            </div>
+            <div className="space-90">
+                <div id="images">
+                    <Row>
+                        {this.renderPhoto()}
+                    </Row>
                 </div>
             </div>
             </>

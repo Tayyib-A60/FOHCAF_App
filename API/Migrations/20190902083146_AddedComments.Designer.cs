@@ -4,14 +4,16 @@ using API.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace api.Migrations
 {
     [DbContext(typeof(FOHCAFDbContext))]
-    partial class FOHCAFDbContextModelSnapshot : ModelSnapshot
+    [Migration("20190902083146_AddedComments")]
+    partial class AddedComments
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -46,7 +48,7 @@ namespace api.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("BlogPostId");
+                    b.Property<int?>("BlogPostId");
 
                     b.Property<string>("CommentMade");
 
@@ -112,6 +114,8 @@ namespace api.Migrations
 
                     b.Property<string>("Email");
 
+                    b.Property<string>("FullName");
+
                     b.HasKey("Id");
 
                     b.ToTable("Subscribers");
@@ -148,8 +152,7 @@ namespace api.Migrations
                 {
                     b.HasOne("API.Core.Models.BlogPost")
                         .WithMany("Comments")
-                        .HasForeignKey("BlogPostId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("BlogPostId");
                 });
 
             modelBuilder.Entity("API.Core.Models.Photo", b =>

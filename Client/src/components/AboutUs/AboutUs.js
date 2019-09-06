@@ -11,6 +11,7 @@ import {
     InputGroup,
     UncontrolledTooltip } 
 from "reactstrap";
+import Subscribe from "components/shared/Subscribe";
 
 // core components
 
@@ -282,6 +283,19 @@ const AboutUs = () =>  {
               </Col>
             </Row>
           </Container>
+        </div>
+        <div
+        className="section "
+        data-background-color="black"
+        id="download-section">
+        <Container>
+        <Row className="justify-content-md-center sharing-area text-center">
+            <Col className="text-center" lg="8" md="12">
+            <h3>Subscribe to our news letter</h3>
+            <Subscribe />
+            </Col>
+        </Row>
+        </Container>
         </div>
         <div
         className="section "

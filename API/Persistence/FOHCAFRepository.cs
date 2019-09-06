@@ -42,6 +42,11 @@ namespace API.Persistence
                             .FirstOrDefaultAsync(p => p.Id == postId);
             return post;
         }
+        public async Task<Comment> GetComment(int commentId)
+        {
+            return await _context.Comments
+                                .FirstOrDefaultAsync(c => c.Id == commentId);
+        }
         public async Task<IEnumerable<Subscriber>> GetSubscribers()
         {
             return await _context.Subscribers
@@ -49,11 +54,9 @@ namespace API.Persistence
         }
         public async Task<QueryResult<BlogPost>> GetBlogPosts(QueryParams queryParams)
         {
-            var blogPosts =  _context.BlogPosts.Include(bp => bp.Photo)
-            // .Where(bp => bp.Photo.Any(p => p.IsMain == true))
+            var blogPosts =  _context.BlogPosts
                                 .AsQueryable();
             blogPosts = FilterPosts(queryParams, blogPosts);
-
             var count = blogPosts.Count();
             blogPosts = blogPosts.Skip((queryParams.CurrentPage - 1) * queryParams.PageSize)
                                     .Take(queryParams.PageSize);
@@ -62,7 +65,19 @@ namespace API.Persistence
             queryResult.BlogPosts = await blogPosts.ToListAsync();
             return queryResult;
         }
-        public IQueryable<BlogPost> FilterPosts(QueryParams queryParams, IQueryable<BlogPost> blogPosts)
+        public async Task<QueryResult<Comment>> GetComments(int id, CommentQuery commentQuery)
+        {
+            var comments = _context.Comments
+                            .Where(c => c.BlogPostId == id).AsQueryable();
+            var count = comments.Count();
+            comments = comments.Skip((commentQuery.CurrentCount - 1) * 5)
+                                    .Take(5);
+            var queryResult = new QueryResult<Comment>();
+            queryResult.TotalItems = count;
+            queryResult.BlogPosts = await comments.ToListAsync();
+            return queryResult;
+        }
+        private IQueryable<BlogPost> FilterPosts(QueryParams queryParams, IQueryable<BlogPost> blogPosts)
         {
             if(!string.IsNullOrWhiteSpace(queryParams.Year)) {
                 blogPosts = blogPosts.Where(bp => bp.date.Year.ToString() == queryParams.Year);
@@ -87,7 +102,17 @@ namespace API.Persistence
                 if(await _context.Users.AnyAsync(u => u.Email == user.Email))
                     return true;
                 return false;
-            } else {
+            } else if(entityName is Comment) {
+                Comment comment = entityName as Comment;
+                if(await _context.Comments.AnyAsync(c => c.Id == comment.Id))
+                    return true;
+                return false;
+            } else if(entityName is Subscriber) {
+                Subscriber subscriber = entityName as Subscriber;
+                if(await _context.Subscribers.AnyAsync(s => s.Email == subscriber.Email))
+                    return true;
+                return false;
+                } else {
                 return false;
             }
         }

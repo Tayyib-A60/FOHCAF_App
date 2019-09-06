@@ -57,3 +57,11 @@
   .blog-title {
       font-size: 22px;
   }
+  .post-link {
+    color: wheat;
+    
+    &:hover {
+      color: wheat;
+      text-decoration: none;
+    }
+  }

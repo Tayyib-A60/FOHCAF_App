@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 import { fetchBlogPostPhoto } from '../../apis/fohcafapis';
 import './BlogPostItem.styles.scss';
@@ -11,32 +12,31 @@ class BlogPostItem extends React.Component {
     async componentDidMount() {
         const { id } = this.props; 
         const photo = await fetchBlogPostPhoto(id);
-        // console.log(photo);
-        
         this.setState({ photoUrl: photo.data.fileName});
-        // console.log(this.state);
-        
     }
     render() { 
-        const { author, heading } = this.props; 
-        console.log('photo url ', this.state.photoUrl);
+        const { author, heading, id } = this.props; 
+        // console.log('photo url ', this.state.photoUrl);
         // if(this.state.photoUrl) {
             return(
             <>
-            <div className='wrapper'>
-                <div className='collection-section'>
-                <div className='collection-item'>
-                    <div className='image' 
-                    style={{ 
-                        // backgroundImage: "url(" + require('assets/img/' + this.state.photoUrl) + ")"
-                        }} />
-                    <div className='collection-footer'>
-                        <span className='blog-title'>{author}: </span>
-                        <span>{heading}</span> 
-                    </div>
+            
+                <div className='wrapper'>
+                    <div className='collection-section'>
+                    <div className='collection-item'>
+                        <div className='image' 
+                        style={{ 
+                            // backgroundImage: "url(" + require('assets/img/' + this.state.photoUrl) + ")"
+                            }} />
+                        <Link className='post-link' to={`/blog/${id}`}>
+                        <div className='collection-footer'>
+                            <span className='blog-title'>{author}: </span>
+                            <span>{heading}</span> 
+                        </div>
+                        </Link>
+                        </div>
                     </div>
                 </div>
-            </div>
             </>
         )};
         //    return (

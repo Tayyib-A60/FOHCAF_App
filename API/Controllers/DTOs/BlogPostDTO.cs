@@ -10,5 +10,6 @@ namespace API.Controllers.DTOs
         public string Body { get; set; }
         public string Author { get; set; }
         public ICollection<Photo> Photo { get; set; }
+        public ICollection<Comment> Comments { get; set; }
     }
 }

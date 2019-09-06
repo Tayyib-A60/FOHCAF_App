@@ -7,8 +7,8 @@ namespace API.Core.Models
         public string Month { get; set; }
         public string Year { get; set; }
         public bool IsSortAscending { get; set; }
-        public int CurrentPage { get; set; } = 1;
-        public int PageSize { get; set; } = 5;
+        public int CurrentPage { get; set; }
+        public int PageSize { get; set; }
         public string SearchString { get; set; }
     }
 }

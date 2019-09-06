@@ -89,18 +89,13 @@ const IndexNavbar = (props) => {
           >
             <Nav navbar>
               <NavItem>
-                <NavLink  p>
-                  <p>About us</p>
+                <NavLink>
+                  <Link className='link' to='/blogs'>Blog</Link>
                 </NavLink>
               </NavItem>
               <NavItem>
                 <NavLink>
-                  <Link className='link' to='/blog'>Blog</Link>
-                </NavLink>
-              </NavItem>
-              <NavItem>
-                <NavLink>
-                  <p>Contact us</p>
+                  <Link  className='link' to='/manage'>Manage</Link>
                 </NavLink>
               </NavItem>
               <NavItem>
@@ -111,11 +106,6 @@ const IndexNavbar = (props) => {
                     <Link to='/login'>Login</Link>
 
                   }
-                </NavLink>
-              </NavItem>
-              <NavItem>
-                <NavLink>
-                  <Link  className='link' to='/manage'>Manage</Link>
                 </NavLink>
               </NavItem>
               <NavItem>

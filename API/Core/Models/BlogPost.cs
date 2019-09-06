@@ -18,5 +18,6 @@ namespace API.Core.Models
         [Required]
         public DateTime date { get; } = DateTime.UtcNow;
         public ICollection<Photo> Photo { get; set; }
+        public ICollection<Comment> Comments { get; set; }
     }
 }

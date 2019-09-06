@@ -10,6 +10,7 @@ namespace API.Persistence
         public DbSet<User> Users { get; set; }
         public DbSet<ContactUs> ContactUs { get; set; }
         public DbSet<Subscriber> Subscribers { get; set; }
-        public DbSet<Photo> Photo { get; set; }        
+        public DbSet<Photo> Photos { get; set; }
+        public DbSet<Comment> Comments { get; set; }      
     }
 }
