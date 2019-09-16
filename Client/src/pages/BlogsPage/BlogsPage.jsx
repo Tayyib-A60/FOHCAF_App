@@ -33,8 +33,10 @@ class BlogPage extends React.Component {
     showPagination = () => {
         if(this.state.totalItems) {
             return (
-                <PaginationComponent onPageChange={this.pageChanged} totalItems={this.state.totalItems} pageSize={this.state.pageSize} />
-                );
+                <div style={{display: `${this.state.totalItems<= this.state.pageSize? 'none': ''}`}}>
+                    <PaginationComponent onPageChange={this.pageChanged} totalItems={this.state.totalItems} pageSize={this.state.pageSize} />
+                </div>
+            );
         }
     };
     
