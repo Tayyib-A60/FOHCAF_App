@@ -58,6 +58,7 @@ namespace API.Persistence
                                 .AsQueryable();
             blogPosts = FilterPosts(queryParams, blogPosts);
             var count = blogPosts.Count();
+            blogPosts = blogPosts.OrderByDescending(bp => bp.Id);
             blogPosts = blogPosts.Skip((queryParams.CurrentPage - 1) * queryParams.PageSize)
                                     .Take(queryParams.PageSize);
             var queryResult = new QueryResult<BlogPost>();
@@ -70,6 +71,7 @@ namespace API.Persistence
             var comments = _context.Comments
                             .Where(c => c.BlogPostId == id).AsQueryable();
             var count = comments.Count();
+            comments = comments.OrderByDescending(c => c.Id);
             comments = comments.Skip((commentQuery.CurrentCount - 1) * 5)
                                     .Take(5);
             var queryResult = new QueryResult<Comment>();
@@ -80,10 +82,10 @@ namespace API.Persistence
         private IQueryable<BlogPost> FilterPosts(QueryParams queryParams, IQueryable<BlogPost> blogPosts)
         {
             if(!string.IsNullOrWhiteSpace(queryParams.Year)) {
-                blogPosts = blogPosts.Where(bp => bp.date.Year.ToString() == queryParams.Year);
+                blogPosts = blogPosts.Where(bp => bp.Date.Year.ToString() == queryParams.Year);
             }
             if(!string.IsNullOrWhiteSpace(queryParams.Month)) {
-                blogPosts = blogPosts.Where(bp => bp.date.Month.ToString() == queryParams.Month);
+                blogPosts = blogPosts.Where(bp => bp.Date.Month.ToString() == queryParams.Month);
             }
             if(!string.IsNullOrWhiteSpace(queryParams.SearchString)) {
                 blogPosts = blogPosts.Where(bp => bp.Heading.ToLower().Contains(queryParams.SearchString.ToLower()));
@@ -121,9 +123,9 @@ namespace API.Persistence
             var apiKey = _configuration.GetSection ("SkineroMotorsSendGridApiKey").Value;
             var sendGridclient = new SendGridClient (apiKey);
             var from = new EmailAddress (broadcastMessage.From.Email, broadcastMessage.From.Name);
-            var subject = "Skinero Motors Contact us";
+            var subject = broadcastMessage.Subject;
             var to = new EmailAddress (broadcastMessage.To.Email, broadcastMessage.To.Name);
-            var htmlContent = $"<div style='background-color: aqua; color: lime;'>{broadcastMessage.Message}</div>";
+            var htmlContent = $"<div style='background-color: #ffffff; margin: 0 auto;  color: rgb(30, 31, 30);'><div  style='background-color: #fcd2d2; padding: 12px; border-top-left-radius: 8px; border-top-right-radius: 8px;'><img src='./logo-1446293_640.png' style='max-height: 36px; max-width: 36px' /></div><div style='background-color: #ffffff; padding: 20px; font-size: 20px'><p>{broadcastMessage.Message}</p></div><div style='background-color: #fcd2d2; padding: 9px; border-bottom-left-radius: 8px;border-bottom-right-radius: 8px;'></div></div>";
             var msg = MailHelper.CreateSingleEmail (from, to, subject, null, htmlContent);
             var response = await sendGridclient.SendEmailAsync (msg);
         }

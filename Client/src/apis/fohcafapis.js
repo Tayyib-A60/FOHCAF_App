@@ -17,6 +17,8 @@ export const deletePhotoAPI = (blogPostId, id) => ( axios.delete(`/photos/${blog
 export const postCommentAPI = (comment) => ( axios.post('/fohcaf/postComment', comment) );
 export const fetchCommentsAPI = (blogPostId, commentQuery) => ( axios.get(`/fohcaf/getComments/${blogPostId}?${toQueryString(commentQuery)}`) );
 export const postSubscriberAPI = email => ( axios.post('/fohcaf/subscribe', email) );
+export const sendBroadcastMessageAPI = broadcastMessage => ( axios.post('/fohcaf/broadcastToSubscribers', broadcastMessage));
+export const sendSingleMessageAPI = message => ( axios.post('/fohcaf/sendSingleMessage', message));
 
 const toQueryString = (obj) => {
     const parts = [];

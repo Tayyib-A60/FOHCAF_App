@@ -1,23 +1,21 @@
 import React from "react";
-// reactstrap components
+
 import { 
     Button,
     Container,
     Row,
-    Col,
-    Input,
-    InputGroupAddon,
-    InputGroupText,
-    InputGroup,
-    UncontrolledTooltip } 
+    Col } 
 from "reactstrap";
-import Subscribe from "components/shared/Subscribe";
 
-// core components
+import Subscribe from "components/shared/Subscribe";
+import ContactUs from "components/Messaging/ContactUs";
+
+
+// const sendUsAMessage = () => {
+//     sendSingleMessageAPI()
+// }
 
 const AboutUs = () =>  {
-    const [firstFocus, setFirstFocus] = React.useState(false);
-  const [lastFocus, setLastFocus] = React.useState(false);
   React.useEffect(() => {
     document.body.classList.add("landing-page");
     document.body.classList.add("sidebar-collapse");
@@ -108,14 +106,12 @@ const AboutUs = () =>  {
                     <img
                       alt="..."
                       className="rounded-circle img-fluid img-raised"
-                      src={require("assets/img/avatar.jpg")}
+                      src={require("assets/img/tayyib.jpg")}
                     ></img>
-                    <h4 className="title">Romina Hadid</h4>
-                    <h5 className="category text-info">Model</h5>
+                    <h4 className="title">Adesokan Toyeeb</h4>
+                    <h5 className="category text-info">Software Engineer</h5>
                     <h5 className="">
-                      You can write here details about one of your team members.
-                      You can give more details about what they do. Feel free to
-                      add some links for people to be able to follow them outside the site.
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Natus eveniet quam minima quaerat voluptate, molestiae dolorem deserunt et eius. Magnam non, exercitationem quidem laudantium nostrum necessitatibus architecto esse facilis inventore.
                     </h5>
                     <Button
                       className="btn-icon btn-round"
@@ -148,14 +144,12 @@ const AboutUs = () =>  {
                     <img
                       alt="..."
                       className="rounded-circle img-fluid img-raised"
-                      src={require("assets/img/ryan.jpg")}
+                      src={require("assets/img/faysol.jpg")}
                     ></img>
-                    <h4 className="title">Ryan Tompson</h4>
-                    <h5 className="category text-info">Designer</h5>
+                    <h4 className="title">Faysol O. Dahoud</h4>
+                    <h5 className="category text-info">Founder/C.E.O</h5>
                     <h5 className="">
-                      You can write here details about one of your team members.
-                      You can give more details about what they do. Feel free to
-                      add some links for people to be able to follow them outside the site.
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Natus eveniet quam minima quaerat voluptate, molestiae dolorem deserunt et eius. Magnam non, exercitationem quidem laudantium nostrum necessitatibus architecto esse facilis inventore.
                     </h5>
                     <Button
                       className="btn-icon btn-round"
@@ -182,12 +176,10 @@ const AboutUs = () =>  {
                       className="rounded-circle img-fluid img-raised"
                       src={require("assets/img/eva.jpg")}
                     ></img>
-                    <h4 className="title">Eva Jenner</h4>
-                    <h5 className="category text-info">Fashion</h5>
+                    <h4 className="title">Someone else</h4>
+                    <h5 className="category text-info">Health Advocate</h5>
                     <h5 className="">
-                      You can write here details about one of your team members.
-                      You can give more details about what they do. Feel free to
-                      add some links for people to be able to follow them outside the site.
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Natus eveniet quam minima quaerat voluptate, molestiae dolorem deserunt et eius. Magnam non, exercitationem quidem laudantium nostrum necessitatibus architecto esse facilis inventore.
                     </h5>
                     <Button
                       className="btn-icon btn-round"
@@ -219,71 +211,7 @@ const AboutUs = () =>  {
             </div>
           </Container>
         </div>
-        <div className="section section-contact-us text-center" style={{backgroundColor: '#2c2c2c !important'}} data-background-color="black">
-          <Container>
-            <h2 className="title">Do you have something for us?</h2>
-            <p className="">Your project is very important to us.</p>
-            <Row>
-              <Col className="text-center ml-auto mr-auto" lg="6" md="8">
-                <InputGroup
-                  className={
-                    "input-lg" + (firstFocus ? " input-group-focus" : "")
-                  }
-                >
-                  <InputGroupAddon addonType="prepend">
-                    <InputGroupText>
-                      <i className="now-ui-icons users_circle-08"></i>
-                    </InputGroupText>
-                  </InputGroupAddon>
-                  <Input
-                    placeholder="First Name..."
-                    type="text"
-                    onFocus={() => setFirstFocus(true)}
-                    onBlur={() => setFirstFocus(false)}
-                  ></Input>
-                </InputGroup>
-                <InputGroup
-                  className={
-                    "input-lg" + (lastFocus ? " input-group-focus" : "")
-                  }
-                >
-                  <InputGroupAddon addonType="prepend">
-                    <InputGroupText>
-                      <i className="now-ui-icons ui-1_email-85"></i>
-                    </InputGroupText>
-                  </InputGroupAddon>
-                  <Input
-                    placeholder="Email..."
-                    type="text"
-                    onFocus={() => setLastFocus(true)}
-                    onBlur={() => setLastFocus(false)}
-                  ></Input>
-                </InputGroup>
-                <div className="textarea-container">
-                  <Input
-                    cols="80"
-                    name="name"
-                    placeholder="Type a message..."
-                    rows="4"
-                    type="textarea"
-                  ></Input>
-                </div>
-                <div className="send-button">
-                  <Button
-                    block
-                    className="btn-round"
-                    color="info"
-                
-                    onClick={e => e.preventDefault()}
-                    size="lg"
-                  >
-                    Send Message
-                  </Button>
-                </div>
-              </Col>
-            </Row>
-          </Container>
-        </div>
+        <ContactUs/>
         <div
         className="section "
         data-background-color="black"
@@ -297,7 +225,7 @@ const AboutUs = () =>  {
         </Row>
         </Container>
         </div>
-        <div
+        {/* <div
         className="section "
         data-background-color="black"
         id="download-section">
@@ -362,7 +290,7 @@ const AboutUs = () =>  {
             </Col>
           </Row>
         </Container>
-        </div>
+        </div> */}
     </div>
     </>
   );

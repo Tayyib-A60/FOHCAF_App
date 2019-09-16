@@ -9,11 +9,14 @@ import { selectBlogPosts } from 'redux/blog-posts/blog-post.selector';
 import { FetchBlogPosts } from 'redux/blog-posts/blog-post.actions';
 import PaginationComponent from 'components/shared/Pagination';
 
+import "react-loader-spinner/dist/loader/css/react-spinner-loader.css"
+import Loader from 'react-loader-spinner';
 class BlogPage extends React.Component {
     state = {
         pageSize: 5,
         currentPage: 1,
-        totalItems: null
+        totalItems: null,
+        loading: true
     };
     getBlogPosts = async () => {
         const queryParams = {
@@ -21,7 +24,7 @@ class BlogPage extends React.Component {
             currentPage: this.state.currentPage
         };
         const blogs = await fetchBlogPostsAPI(queryParams);
-        this.setState({ totalItems: blogs.data.totalItems });
+        this.setState({ totalItems: blogs.data.totalItems, loading: false });
         this.props.fetchBlogPosts(blogs.data);
     }
     async componentDidMount() {
@@ -41,9 +44,6 @@ class BlogPage extends React.Component {
     };
     
     renderBlogPosts = () => {
-        // const blogPost = this.props.blogPosts.blogPosts[0];
-        // console.log(blogPost.photo);
-        
         return this.props.blogPosts.blogPosts.map( blogPost => {
             return <BlogPostItem className='collection-item'
                         key={blogPost.id}
@@ -56,9 +56,25 @@ class BlogPage extends React.Component {
         });
     }
     render() {
+        if(this.state.loading) {
+            return (
+                <div style={{ padding: '240px 50px 100px 600px' }}>
+                    <Loader type="RevolvingDot"
+                    color="blue"
+                    height={1000}
+                    width={1000}
+                    timeout={300000} 
+                     />
+                </div>
+            );
+        }
         return (
             <>
             <div className='collection-page'>
+                <br/>
+                <br/>
+                <br/>
+                <br/>
                 <div className='items'>
                     {
                         this.renderBlogPosts()

@@ -27,41 +27,46 @@ const BlogPostImages = ({photos}) => {
   const [activeIndex, setActiveIndex] = React.useState(0);
   const [animating, setAnimating] = React.useState(false);
   const onExiting = () => {
-    setAnimating(true);
+    // setAnimating(true);
   };
   const onExited = () => {
-    setAnimating(false);
+    // setAnimating(false);
   };
   const next = () => {
-    if (animating) return;
+    // if (animating) return;
     const nextIndex = activeIndex === items.length - 1 ? 0 : activeIndex + 1;
     setActiveIndex(nextIndex);
   };
+  const stopAnimation = () => {
+    setAnimating(false);
+  }
   const previous = () => {
-    if (animating) return;
+    // if (animating) return;
     const nextIndex = activeIndex === 0 ? items.length - 1 : activeIndex - 1;
     setActiveIndex(nextIndex);
   };
   const goToIndex = newIndex => {
-    if (animating) return;
+    // if (animating) return;
     setActiveIndex(newIndex);
   };
   return (
     <>
       <Carousel activeIndex={activeIndex} next={next} previous={previous}>
         <CarouselIndicators
-          items={items}
+          items={photos}
           activeIndex={activeIndex}
           onClickHandler={goToIndex}
         />
-        {items.map(item => {
+        {photos.map(item => {
           return (
             <CarouselItem
               onExiting={onExiting}
               onExited={onExited}
-              key={item.src}
+              onLoad={stopAnimation}
+              onLoadedData={stopAnimation}
+              key={item.id}
             >
-              <img src={item.src} alt={item.altText} />
+              <img src={`https://localhost:5001/uploads/${item.fileName}`} alt={item.fileName} />
               <div className="carousel-caption d-none d-md-block">
                 <h5>{item.caption}</h5>
               </div>
@@ -72,18 +77,20 @@ const BlogPostImages = ({photos}) => {
           className="carousel-control-prev"
           data-slide="prev"
           href="#pablo"
+          style={{ display: `${photos.length > 1? '': 'none'}`}}
           onClick={e => {
             e.preventDefault();
             previous();
           }}
           role="button"
-        >
+          >
           <i className="now-ui-icons arrows-1_minimal-left"></i>
         </a>
         <a
           className="carousel-control-next"
           data-slide="next"
           href="#pablo"
+          style={{ display: `${photos.length > 1? '': 'none'}`}}
           onClick={e => {
             e.preventDefault();
             next();

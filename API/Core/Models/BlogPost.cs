@@ -16,7 +16,7 @@ namespace API.Core.Models
         [Required]
         public string Author { get; set; }
         [Required]
-        public DateTime date { get; } = DateTime.UtcNow;
+        public DateTime Date { get; set; }
         public ICollection<Photo> Photo { get; set; }
         public ICollection<Comment> Comments { get; set; }
     }

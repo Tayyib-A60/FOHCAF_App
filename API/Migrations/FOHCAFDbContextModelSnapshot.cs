@@ -31,6 +31,8 @@ namespace api.Migrations
                     b.Property<string>("Body")
                         .IsRequired();
 
+                    b.Property<DateTime>("Date");
+
                     b.Property<string>("Heading")
                         .IsRequired()
                         .HasMaxLength(255);

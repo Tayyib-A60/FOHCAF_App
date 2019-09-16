@@ -1,5 +1,5 @@
 import React from 'react';
-import { Route, Switch } from "react-router-dom";
+import { Route, Switch, Redirect } from "react-router-dom";
 
 // pages for this kit
 import Navbar from './components/Navbar/Navbar';
@@ -15,23 +15,35 @@ import HomePageFooter from 'components/Footer/HomePageFooter';
 import UploadPhoto from './pages/AdminPages/UploadPhoto';
 import ManageBlogPost from './pages/AdminPages/ManageBlogPosts';
 import CreateBlog from './components/BlogPost/CreateBlogPost';
-import BlogDetailsPage from 'pages/BlogPage/BlogDetailsPage';
 import BlogDetails from 'components/BlogPost/BlogDetails';
 
-const App = () => (
+import { connect } from 'react-redux';
+import { createStructuredSelector } from 'reselect';
+import { selectCurrentUser } from 'redux/user/user.selector';
+
+const App = ({ currentUser }) =>  {
+    console.log(currentUser);
+    return (
     <div>
         <Navbar />
         <Switch>
             <Route exact path='/' component={HomePage} />
             <Route exact path='/login' component={AdminLogin} />
             <Route exact path='/blogs' component={BlogPage} />
-            <Route exact path='/manage' component={ManageBlogPost} />
+            <Route exact path='/manage'
+                render={() => !currentUser? 
+                (<Redirect to='/' />): <ManageBlogPost/>}    
+            />
             <Route exact path='/editBlogPost/:id' component={CreateBlog} />
             <Route exact path='/uploadPhoto/:id' component={UploadPhoto} />
             <Route exact path='/blog/:id' component={BlogDetails} />
       </Switch>
       <HomePageFooter/>
     </div>
-);
+)};
 
-export default App;
+const mapStateToProps = createStructuredSelector({
+    currentUser: selectCurrentUser
+});
+
+export default connect(mapStateToProps, null)(App);

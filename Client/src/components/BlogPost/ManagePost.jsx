@@ -2,12 +2,14 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { Link } from 'react-router-dom';
+import Loader from 'react-loader-spinner';
 
 import { selectBlogPosts } from '../../redux/blog-posts/blog-post.selector';
 import { FetchBlogPosts } from 'redux/blog-posts/blog-post.actions';
 import { fetchBlogPostsAPI, deleteBlogPostAPI } from 'apis/fohcafapis';
 import { DeleteBlogPost } from 'redux/blog-posts/blog-post.actions';
 import PaginationComponent from '../shared/Pagination';
+
 
 class ManagePost extends React.Component{
     state = {
@@ -22,7 +24,7 @@ class ManagePost extends React.Component{
             currentPage: this.state.currentPage
         };
         const blogs = await fetchBlogPostsAPI(queryParams);
-        this.setState({ totalItems: blogs.data.totalItems });
+        this.setState({ totalItems: blogs.data.totalItems, blogs: blogs.data.blogPosts });
         this.props.fetchBlogPosts(blogs.data);
     }
 
@@ -43,16 +45,24 @@ class ManagePost extends React.Component{
     };
 
     deletePost = async post => {
-        const res = await deleteBlogPostAPI(post.id);
-        if (res.status === 200) {
-            const index = this.props.blogPosts.blogPosts.indexOf(post);
-            this.props.deleteBlogPost(post.id);
-            this.props.blogPosts.blogPosts.splice(index, 1);
-            // this.setState({ photos: this.state.photos });
+        if(window.confirm("Are you sure you want to delete the post")) {
+            const res = await deleteBlogPostAPI(post.id);
+            if (res.status === 200) {
+                const index = this.state.blogs.indexOf(post);
+                this.state.blogs.splice(index, 1);
+                this.setState({ blogs: this.state.blogs });
+            }
+            console.log(res);
         }
-        console.log(res);
     }
     render() {
+        if(this.state.blogs.length < 1) {
+           return <Loader type="Puff"
+            color="#00BFFF"
+            height={100}
+            width={100}
+            timeout={3000} />
+        }
         return (
         <>
             <div>
@@ -70,7 +80,7 @@ class ManagePost extends React.Component{
                 </thead>
                 <tbody>
                     {
-                        this.props.blogPosts.blogPosts.map(post => {
+                        this.state.blogs.map(post => {
                             const date = new Date(post.date);
                         return (
                             <tr key={post.id}>

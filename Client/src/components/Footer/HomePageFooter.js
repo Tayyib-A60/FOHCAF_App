@@ -1,48 +1,31 @@
 /*eslint-disable*/
 import React from "react";
-
+import { Link } from 'react-router-dom';
+ 
 // reactstrap components
 import { Container } from "reactstrap";
 
 const HomePageFooter = () => {
   return (
     <footer className="footer" data-background-color="black">
-        {/* <hr style={{ backgroundColor: '#007bff'}}/>    */}
       <Container>
         <nav>
           <ul>
             <li>
-              <a
-                href="https://www.creative-tim.com?ref=nukr-dark-footer"
-                target="_blank"
-              >
+              <Link to='/'>
                 Contact us
-              </a>
+              </Link>
             </li>
             <li>
-              <a
-                href="http://presentation.creative-tim.com?ref=nukr-dark-footer"
-                target="_blank"
-              >
+              <Link to='/blogs'>
                 Blog
-              </a>
-            </li>
-            <li>
-              <a
-                href="http://blog.creative-tim.com?ref=nukr-dark-footer"
-                target="_blank"
-              >
-                Upcoming Events
-              </a>
+              </Link>
             </li>
           </ul>
         </nav>
         <div className="copyright" id="copyright">
           © {new Date().getFullYear()}, Designed and Coded by{" "}
-          <a
-            href="https://www.invisionapp.com?ref=nukr-dark-footer"
-            target="_blank"
-          >
+          <a href='https://www.linkedin.com/in/adesokan-toyeeb-taiwo-8b0038141/'>
             Toyeeb Adesokan
           </a>
         </div>

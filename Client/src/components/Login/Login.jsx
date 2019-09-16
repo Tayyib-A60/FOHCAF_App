@@ -16,9 +16,13 @@ import {
   Col
 } from "reactstrap";
 
-import { signInUser } from '../../redux/user/user.actions';
+import { Link } from 'react-router-dom';
+import { createStructuredSelector } from 'reselect';
+import { selectCurrentUser } from "redux/user/user.selector";
+import { signInUser, signOutUser } from '../../redux/user/user.actions';
 import { createUserAPI, signInAPI } from '../../apis/fohcafapis';
 import { connect } from 'react-redux';
+import Notifications, {notify} from 'react-notify-toast';
 
 
 class Login extends React.Component {
@@ -32,37 +36,36 @@ class Login extends React.Component {
         wantToSignIn: true
     };
 }
-  // applyStyles = () => {
-  //   React.useEffect(() => {
-  //     document.body.classList.add("login-page");
-  //     document.body.classList.add("sidebar-collapse");
-  //     document.documentElement.classList.remove("nav-open");
-  //     window.scrollTo(0, 0);
-  //     document.body.scrollTop = 0;
-  //     return () => {
-  //       document.body.classList.remove("login-page");
-  //       document.body.classList.remove("sidebar-collapse");
-  //     };
-  //   });
-  // }
-
+  componentDidMount() {
+    console.log(this.props);
+  }
   handleChange = (event) => {
     const { value, name } = event.target;
-
     this.setState({ [name]: value });
-    // console.log(this.state);
   };
 
   signInOrCreateUser = async event => {
     event.preventDefault();
     const { name, email, password } = this.state;
     if (this.state.wantToSignIn) {
-      const loggedInUser = await signInAPI({ email, password });
-      this.props.signInUser(loggedInUser.data);
-      return loggedInUser.data;
-    }
-    
-    return await createUserAPI({ name, email, password });
+       signInAPI({ email, password }).then(loggedInUser => {
+           this.props.signInUser(loggedInUser.data);
+           if(loggedInUser.status === 200) {
+             notify.show('Login successful', 'success', 20000);
+           }
+         }).catch(err => {
+           notify.show('Login failed', 'error', 20000);
+         });
+         return;
+    } 
+    createUserAPI({ name, email, password }).then(res => {
+        if(res.status === 200) {
+          notify.show('Sign up successful', 'success', 20000);
+        } 
+      }).catch(err => {
+
+          notify.show('Sign up failed', 'error', 20000);
+        });
   };
   wantToCreatAccount = event => {
     event.preventDefault();
@@ -72,14 +75,37 @@ class Login extends React.Component {
     event.preventDefault();
     this.setState({ wantToSignIn: true });
   }
+  logout = () => {
+    this.props.signOutUser(this.props.currentUser);
+    notify.show('Signed out', 'success', 2000);
+  }
 
-  // firstFocus = () => React.useState(false);
-  // setFirstFocus = () => React.useState(false);
-  // lastFocus = () => React.useState(false);
-  // setLastFocus = () => React.useState(false);
   render () {
+    if(this.props.currentUser) {
+      return (
+        <>
+        <Notifications options={{zIndex: 500, top: '450px'}} />
+        <div style={{ paddingTop: '250px'}}>
+          <Container>
+              <Col className="ml-auto mr-auto" md="4">
+                <Card className="card-login card-plain">
+                  <Form onSubmit={this.createUser} className="form">
+                    <CardHeader className="text-center">
+                      <h3>Are u sure you want to logout?</h3>
+                      <Button color='error' onClick={() => this.logout()}>Logout</Button>
+                    <Button color='error'><Link  to='/'>No</Link> </Button>  
+                    </CardHeader>
+                </Form>
+              </Card>
+            </Col>
+          </Container>
+        </div>
+        </>
+      );
+    }
     return (
       <>
+      <Notifications options={{zIndex: 500, top: '450px'}} />
   <div className="content">
             <Container>
               <Col className="ml-auto mr-auto" md="4">
@@ -163,7 +189,7 @@ class Login extends React.Component {
                         size="lg"
                         onClick={this.signInOrCreateUser}
                       >
-                        Get Started
+                        { this.state.wantToSignIn? 'Login': 'Sign up'}
                       </Button>
                     </CardBody>
                     </Form>
@@ -215,8 +241,13 @@ class Login extends React.Component {
 
 const mapDispatchToProps = dispatch => ({
   signInUser: loggedInUser => 
-          dispatch(signInUser(loggedInUser))
+          dispatch(signInUser(loggedInUser)),
+  signOutUser: user =>
+      dispatch(signOutUser(user))
+});
+const mapStateToProps = createStructuredSelector({
+  currentUser: selectCurrentUser
 });
 
-export default connect(null, mapDispatchToProps)(Login);
+export default connect(mapStateToProps, mapDispatchToProps)(Login);
 

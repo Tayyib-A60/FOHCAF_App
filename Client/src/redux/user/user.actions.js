@@ -9,3 +9,7 @@ export const signInUser = user => ({
     type: UserActionTypes.SET_CURRENT_USER,
     payload: user
 });
+export const signOutUser = user => ({
+    type: UserActionTypes.REMOVE_CURRENT_USER,
+    payload: user
+});

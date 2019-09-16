@@ -1,3 +1,4 @@
+using System;
 using System.Threading.Tasks;
 using API.Controllers.DTOs;
 using API.Core;
@@ -22,6 +23,7 @@ namespace API.Controllers
         public async Task<IActionResult> CreateBlogPost([FromBody] BlogPostDTO blogPostDTO)
         {
             var blogPostToCreate = _mapper.Map<BlogPost>(blogPostDTO);
+            blogPostToCreate.Date = DateTime.UtcNow;
             if(await _repository.EntityExists(blogPostToCreate)) {
                 return BadRequest("This post has already been created");
             }
@@ -104,12 +106,13 @@ namespace API.Controllers
             return Ok();
         }
         [HttpPost("broadcastToSubscribers")]
-        public async Task<IActionResult> SendMailToSubscribers([FromForm] BroadcastMessageDTO broadcastMessageDTO) 
+        public async Task<IActionResult> SendMailToSubscribers([FromBody] BroadcastMessageDTO broadcastMessageDTO) 
         {
             var broadcastMessage = _mapper.Map<BroadcastMessage>(broadcastMessageDTO);
             var subscribers = await _repository.GetSubscribers();
             foreach (var subscriber in subscribers)
             {
+                broadcastMessage.To = new NameEmailPair();
                 broadcastMessage.To.Email = subscriber.Email;
                 broadcastMessage.To.Name = "";
                 try
@@ -118,10 +121,25 @@ namespace API.Controllers
                 }
                 catch (System.Exception ex)
                 {
-                    return Ok(ex.Message);
+                    return BadRequest(ex.Message);
                     throw;
                 }
             }
+            return Ok();
+        }
+        [HttpPost("sendSingleMessage")]
+        public IActionResult SendSingleMessage([FromBody] BroadcastMessageDTO broadcastMessageDTO) 
+        {
+            var broadcastMessage = _mapper.Map<BroadcastMessage>(broadcastMessageDTO);
+                try
+                {
+                    _repository.EmailSender(broadcastMessage);
+                }
+                catch (System.Exception ex)
+                {
+                    return BadRequest(ex.Message);
+                    throw;
+                }
             return Ok();
         }
 

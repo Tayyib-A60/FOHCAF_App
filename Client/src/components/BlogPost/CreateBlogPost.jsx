@@ -15,6 +15,7 @@ import { createBlogPostAPI, fetchBlogPostAPI, updateBlogPostAPI } from '../../ap
 import { CreateBlogPost } from '../../redux/blog-posts/blog-post.actions';
 import './CreateBlogPost.styles.scss';
 import { connect } from 'react-redux';
+import Notifications, { notify } from 'react-notify-toast';
 
 class CreateBlog extends React.Component {
     state = {
@@ -45,14 +46,25 @@ class CreateBlog extends React.Component {
         event.preventDefault();
         const { author, heading, body } = this.state;
         if (this.state.createNew) {
-          const blogPostCreated = await createBlogPostAPI({ author, heading, body });
-          this.props.createBlogPost(blogPostCreated.data);
-          console.log(blogPostCreated);
-        //   return blogPostCreated;
+          createBlogPostAPI({ author, heading, body }).then(blogPostCreated => {
+            this.props.createBlogPost(blogPostCreated.data);
+                if(blogPostCreated.status === 200) {
+                    notify.show('Blog post created!', 'success', 20000);
+                    this.setState({ author: '', heading: '', body: ''});
+                  } 
+            }).catch(err => {
+                notify.show(`Failed: ${err.message}`, 'error', 20000);
+            });
         }
         else if(this.state.createNew === false) {
-            const blogPostUpdated = await updateBlogPostAPI(this.state.id, { author, heading, body, id: this.state.id });
-            console.log(blogPostUpdated.data);
+            updateBlogPostAPI(this.state.id, { author, heading, body, id: this.state.id }).then(blogPostUpdated => {
+                this.props.createBlogPost(blogPostUpdated.data);
+                if(blogPostUpdated.status === 200) {
+                    notify.show('Blog post updated!', 'success', 20000);
+                    } 
+            }).catch(err => {
+                notify.show(`Failed: ${err.message}`, 'error', 20000);
+            });
         }
       };
 
@@ -60,6 +72,7 @@ class CreateBlog extends React.Component {
             const { author, heading, body } = this.state;
              return (
                 <>
+                <Notifications options={{zIndex: 500, top: '450px'}} />
                 <div className="createBlogSection section-contact-us" style={{backgroundColor: '#2c2c2c !important', }} data-background-color="black">
                 <Container>
                 <Row>

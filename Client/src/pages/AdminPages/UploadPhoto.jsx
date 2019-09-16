@@ -5,6 +5,7 @@ import { Col, Row, Button } from 'reactstrap';
 import { uploadPictureAPI, fetchBlogPostPhotos, makeMainPhotoAPI, deletePhotoAPI } from '../../apis/fohcafapis';
 import { UploadBlogPostPhoto } from 'redux/blog-posts/blog-post.actions';
 import './UploadPhoto.styles.scss';
+import Notifications, { notify } from 'react-notify-toast';
 
 class UploadPhoto extends React.Component {
     state = {
@@ -25,13 +26,17 @@ class UploadPhoto extends React.Component {
             console.log(file, formData);
             
             const { id } = this.props.match.params;
-            const response = await uploadPictureAPI(id, formData);
-            if(response.status === 200) {
-                const pictures = await fetchBlogPostPhotos(id);
-                this.setState({ photos: pictures.data });
-            }  
-        };
-    deletePhoto = async (photo) => {
+            uploadPictureAPI(id, formData).then(async res => {
+                if(res.status === 200) {
+                    const pictures = await fetchBlogPostPhotos(id);
+                    notify.show('Photo upload was successful', 'success', 5000);
+                    this.setState({ photos: pictures.data });
+                }
+                return;
+            });
+            notify.show('Photo upload failed', 'error', 5000);
+    };
+    deletePhoto = async photo => {
         const res = await deletePhotoAPI(this.state.blogPostId, photo.id);
         if (res.status === 200) {
             const index = this.state.photos.indexOf(photo);
@@ -49,7 +54,7 @@ class UploadPhoto extends React.Component {
                     <img
                     alt="..."
                     className="rounded img-raised"
-                    src={require(`assets/img/${photo.fileName}`)}
+                    src={`https://localhost:5001/uploads/${photo.fileName}`}
                     ></img>
                     <Button onClick={() => this.makeMainPhoto(photo) } color='success' disabled={photo.isMain}>IsMain</Button>
                     <Button onClick={() => this.deletePhoto(photo) } color='danger'>Delete</Button>
@@ -69,17 +74,13 @@ class UploadPhoto extends React.Component {
         console.log(res.statusText);
     }
     render() {
-        if(this.state.photos.length < 1 ) {
-            return <div>Loading...</div>
-        }
+        // if(this.state.photos.length < 1 ) {
+        //     return <div>Loading...</div>
+        // }
         return (
             <>
+            <Notifications options={{zIndex: 500, top: '450px'}} />
             <div style={{ padding: '10rem' }}>
-                {/* <label class="file">
-                    <input type="file"  onChange={this.handleChange} id="file" aria-label="File browser example"/>
-                    <span class="file-custom"></span>
-                </label> */}
-                {/* <i className="fas fa-upload"></i> */}
                 <input type='file' name='photo' onChange={this.handleChange} />
             </div>
             <div className="space-90">
@@ -88,6 +89,16 @@ class UploadPhoto extends React.Component {
                         {this.renderPhoto()}
                     </Row>
                 </div>
+                <br/>
+                <br/>
+                <br/>
+                <br/>
+                <br/>
+                <br/>
+                <br/>
+                <br/>
+                <br/>
+                <br/>
             </div>
             </>
             );

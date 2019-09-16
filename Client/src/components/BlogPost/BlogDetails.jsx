@@ -1,6 +1,11 @@
 import React from 'react';
 
-import { fetchBlogPostAPI, fetchBlogPostPhotos, fetchCommentsAPI, postCommentAPI } from '../../apis/fohcafapis';
+import { 
+        fetchBlogPostAPI,
+        fetchBlogPostPhotos,
+        fetchCommentsAPI,
+        postCommentAPI }
+from '../../apis/fohcafapis';
 import { 
         Card,
         CardBody, 
@@ -15,8 +20,13 @@ import {
         Col, 
         Button } 
 from 'reactstrap';
+
 import './BlogDetails.styles.scss';
 import BlogPostImages from './BlogPostImages';
+
+import "react-loader-spinner/dist/loader/css/react-spinner-loader.css"
+import Loader from 'react-loader-spinner';
+import Notifications, { notify } from 'react-notify-toast';
 
 class BlogDetails extends React.Component {
     state = {
@@ -25,7 +35,8 @@ class BlogDetails extends React.Component {
         count: 1,
         comments: [],
         blogPostId: null,
-        totalComments: null
+        totalComments: null,
+        loading: true
     };
     fetchComments = async id => {
         const commentParams = {
@@ -44,10 +55,9 @@ class BlogDetails extends React.Component {
             photos: photos.data,
             comments: comments.blogPosts,
             blogPostId: id,
-            totalComments: comments.totalItems
-        });
-        console.log(this.state);
-        
+            totalComments: comments.totalItems,
+            loading: false
+        });        
     }
     
     loadMoreComments = async () => {
@@ -91,15 +101,19 @@ class BlogDetails extends React.Component {
             madeBy: this.state.madeBy,
             commentMade: this.state.commentMade
         };
-        const res = await postCommentAPI(comment);
-        if(res.status === 200) {
-            await this.setState({ count: this.state.count + 1 });
-            const commentParams = {
-                currentCount: this.state.count
-            };
-            const comments = await this.fetchComments(this.state.blogPostId);
-            this.setState({ comments: comments.blogPosts });
-        }
+        postCommentAPI(comment).then( async res => {
+            if(res.status === 200) {
+                notify.show('Your comment has been added', 'success', 5000);
+                await this.setState({ count: 1 });
+                const commentParams = {
+                    currentCount: this.state.count
+                };
+                const comments = await this.fetchComments(this.state.blogPostId, commentParams);
+                this.setState({ comments: comments.blogPosts, madeBy: '', commentMade: '' });
+            }
+        }).catch(err => {
+            notify.show('Failed to post comment', 'error', 5000)
+        })
     }
     thereIsMore = () => {
         if(this.state.totalComments > this.state.comments.length) {
@@ -109,22 +123,32 @@ class BlogDetails extends React.Component {
     }
     
     render() {
+        if(this.state.loading) {
+            return (
+                <div style={{ padding: '240px 50px 100px 600px' }}>
+                    <Loader type="RevolvingDot"
+                    color="blue"
+                    height={1000}
+                    width={1000}
+                    timeout={60000} 
+                     />
+                </div>
+            );
+        }
         return (
             <>
             <div>
+            <Notifications options={{zIndex: 500, top: '450px'}} />
             <Card className="mb-3 blog-card"> 
                 {/* <CardImg className='blog-cardImage' alt="..." src={require('assets/img/9b727d99-8ef5-49e6-a311-909a0c628f0d.jpg')} top></CardImg> */}
                 <CardBody>
                 <BlogPostImages className='blog-cardImage' photos={this.state.photos}/>
-                <CardTitle tag="h4">Card title</CardTitle>
+                <CardTitle tag="h4">{this.state.blogPost.author}: {this.state.blogPost.heading}</CardTitle>
                 <CardText>
-                    This is a wider card with supporting text below as a natural
-                    lead-in to additional content. This content is a little bit
-                    longer. Lorem ipsum dolor sit amet consectetur adipisicing elit. Quasi nesciunt ut, voluptatem quas aut corporis quo alias cumque labore esse voluptatibus fugit deserunt iusto, laborum, dolor ipsam molestias delectus. Beatae. Lorem ipsum dolor sit amet consectetur adipisicing elit. Culpa exercitationem odit eius corporis, illum deleniti repudiandae aliquid impedit fugiat asperiores magni hic dolore necessitatibus maxime iusto ea enim dolor quasi! Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquam, magni sequi eos consequuntur nostrum magnam soluta atque id, debitis odit, ducimus dolore reiciendis quod omnis voluptatum provident modi corrupti ratione! Lorem ipsum dolor sit amet consectetur, adipisicing elit. Odio facere rem porro minima nostrum velit sapiente nam, nihil consequuntur ex laudantium laborum facilis, possimus aperiam vel quam tempora repudiandae optio.
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Odit hic, sapiente tenetur saepe quos quae blanditiis tempore dolorum eligendi sint autem, incidunt provident atque vero iure. Molestias maiores ipsum earum? Lorem ipsum dolor sit amet consectetur adipisicing elit. Facere odio ducimus non quia, cupiditate laborum in obcaecati accusamus voluptatibus quis dolorem earum qui, inventore omnis, maiores quidem quod et repudiandae? Lorem, ipsum dolor sit amet consectetur adipisicing elit. Modi, nostrum! Possimus vero sed unde sit accusantium pariatur, nam debitis, facere quos reiciendis, perferendis magnam corrupti accusamus ratione cupiditate vitae commodi. Lorem ipsum dolor, sit amet consectetur adipisicing elit. Incidunt quis rem et similique, impedit dolorem officia, error blanditiis accusamus suscipit ipsam, quo aspernatur. Dignissimos reiciendis placeat soluta molestias culpa at?
+                    {this.state.blogPost.body}
                 </CardText>
                 <CardText>
-                    <small className="text-muted">Last updated 3 mins ago</small>
+                    {/* <small className="text-muted">Last updated 3 mins ago</small> */}
                 </CardText>
                     { 
                         this.renderComments()
@@ -136,7 +160,7 @@ class BlogDetails extends React.Component {
                         // disabled={this.thereIsMore()}
                         className={`${this.thereIsMore()? '': 'none'}`}
                         // style={{ display: `${this.thereIsMore()}? none !important: none !important`}}
-                    >Load more <i class="fas fa-spinner"></i></Button>
+                    >Load more <i className="fas fa-spinner"></i></Button>
                 </CardBody>
                 </Card>
                 <Container>
@@ -159,6 +183,7 @@ class BlogDetails extends React.Component {
                         aria-describedby="madeBy"
                         id="madeBy"
                         name='madeBy'
+                        value={this.state.madeBy}
                         placeholder="Please enter your name"
                         type="text"
                         onChange={this.handleChange}
@@ -171,6 +196,7 @@ class BlogDetails extends React.Component {
                         <Input style={{maxHeight: '300px'}}
                             cols="80"
                             name="commentMade"
+                            value={this.state.commentMade}
                             placeholder="Please enter your comment"
                             rows="7"
                             type="textarea"

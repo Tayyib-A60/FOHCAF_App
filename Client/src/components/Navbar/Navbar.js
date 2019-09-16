@@ -16,9 +16,11 @@ import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { selectCurrentUser } from "redux/user/user.selector";
 import './Navbar.styles.scss';
-import { homePage } from "redux/user/user.selector";
-
+import { signOutUser } from './../../redux/user/user.actions';
+// https://www.linkedin.com/in/faysol-oluwakemi-6752a112b
+// https://facebook.com/fohcaf.international/
 const IndexNavbar = (props) => {
+  
   const { currentUser } = props;
   
   
@@ -93,16 +95,16 @@ const IndexNavbar = (props) => {
                   <Link className='link' to='/blogs'>Blog</Link>
                 </NavLink>
               </NavItem>
-              <NavItem>
+              <NavItem style={{ display: `${currentUser? '' : 'none' }`}}>
                 <NavLink>
-                  <Link  className='link' to='/manage'>Manage</Link>
+                  <Link className='link' to='/manage'>Manage</Link>
                 </NavLink>
               </NavItem>
               <NavItem>
                 <NavLink>
                   {
                     currentUser? 
-                    <a onClick={() => console.log('logged out')}>Logout</a> :
+                    <Link to='/login' >Logout</Link> :
                     <Link to='/login'>Login</Link>
 
                   }
@@ -123,7 +125,7 @@ const IndexNavbar = (props) => {
               </NavItem>
               <NavItem>
                 <NavLink
-                  href="https://www.facebook.com/CreativeTim?ref=creativetim"
+                  href="https://facebook.com/fohcaf.international/"
                   target="_blank"
                   id="facebook-tooltip"
                 >
@@ -136,7 +138,7 @@ const IndexNavbar = (props) => {
               </NavItem>
               <NavItem>
                 <NavLink
-                  href="https://www.instagram.com/CreativeTimOfficial?ref=creativetim"
+                  href="https://www.instagram.com/fohcaf_international/"
                   target="_blank"
                   id="instagram-tooltip"
                 >
@@ -158,5 +160,9 @@ const IndexNavbar = (props) => {
 const mapStateToProps = createStructuredSelector({
   currentUser: selectCurrentUser
 });
+const mapDispatchToProps = dispatch => ({
+  signOutUser: user =>
+            dispatch(signOutUser(user))
+});
 
-export default connect(mapStateToProps, null) (IndexNavbar);
+export default connect(mapStateToProps, mapDispatchToProps) (IndexNavbar);

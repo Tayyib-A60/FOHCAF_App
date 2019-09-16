@@ -17,10 +17,17 @@ import {
 
 import CreateBlog from '../../components/BlogPost/CreateBlogPost';
 import ManagePost from 'components/BlogPost/ManagePost';
+import Messaging from 'components/Messaging/Messaging';
+import SingleMessage from 'components/Messaging/SingleMessage';
+import { connect } from 'react-redux';
+import { createStructuredSelector } from 'reselect';
+import { selectCurrentUser } from "../../redux/user/user.selector";
 
-const ManageBlogPost = () => {
+const ManageBlogPost = ({ currentUser }) => {
+    // if(!currentUser) {
+    //     // history
+    // }
     const [iconPills, setIconPills] = React.useState("1");
-    const [pills, setPills] = React.useState("1");
         return (
             <>
             <div style={{padding: '2rem'}}>
@@ -41,9 +48,7 @@ const ManageBlogPost = () => {
                                 e.preventDefault();
                                 setIconPills("1");
                                 }}
-                            >
-                                <i className="now-ui-icons objects_umbrella-13"></i>
-                                Create
+                            > <i className="fas fa-plus-square"></i> Create
                             </NavLink>
                             </NavItem>
                             <NavItem>
@@ -55,8 +60,7 @@ const ManageBlogPost = () => {
                                 setIconPills("2");
                                 }}
                             >
-                                <i className="now-ui-icons shopping_cart-simple"></i>
-                                Manage
+                                <i class="fas fa-tasks"></i> Manage
                             </NavLink>
                             </NavItem>
                             <NavItem>
@@ -68,8 +72,7 @@ const ManageBlogPost = () => {
                                 setIconPills("3");
                                 }}
                             >
-                                <i className="now-ui-icons shopping_shop"></i>
-                                Upload Pic
+                                <i className="fas fa-envelope"></i> Broadcast Message
                             </NavLink>
                             </NavItem>
                             <NavItem>
@@ -81,8 +84,7 @@ const ManageBlogPost = () => {
                                 setIconPills("4");
                                 }}
                             >
-                                <i className="now-ui-icons ui-2_settings-90"></i>
-                                Settings
+                                <i class="fas fa-envelope"></i> Single Message
                             </NavLink>
                             </NavItem>
                         </Nav>
@@ -99,25 +101,10 @@ const ManageBlogPost = () => {
                         <ManagePost />
                         </TabPane>
                         <TabPane tabId="iconPills3">
-                        <p>
-                            I think that’s a responsibility that I have, to push
-                            possibilities, to show people, this is the level that
-                            things could be at. So when you get something that has
-                            the name Kanye West on it, it’s supposed to be pushing
-                            the furthest possibilities. I will be the leader of a
-                            company that ends up being worth billions of dollars,
-                            because I got the answers. I understand culture. I am
-                            the nucleus.
-                        </p>
+                        <Messaging />
                         </TabPane>
                         <TabPane tabId="iconPills4">
-                        <p>
-                            "I will be the leader of a company that ends up being
-                            worth billions of dollars, because I got the answers. I
-                            understand culture. I am the nucleus. I think that’s a
-                            responsibility that I have, to push possibilities, to
-                            show people, this is the level that things could be at."
-                        </p>
+                            <SingleMessage />
                         </TabPane>
                     </TabContent>
                     </CardBody>
@@ -125,9 +112,18 @@ const ManageBlogPost = () => {
                     </Col>
                     </Row>
                     </Container>
+                    <br/>
+                    <br/>
+                    <br/>
+                    <br/>
+                    <br/>
+                    <br/>
                     </div>
             </>
         );
 }
+const mapStateToProps = createStructuredSelector({
+    currentUser: selectCurrentUser
+  });
 
-export default ManageBlogPost;
+export default connect(mapStateToProps, null)(ManageBlogPost);
