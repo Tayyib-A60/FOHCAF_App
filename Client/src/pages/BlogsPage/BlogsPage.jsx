@@ -46,16 +46,23 @@ class BlogPage extends React.Component {
     };
     
     renderBlogPosts = () => {
-        return this.props.blogPosts.blogPosts.map( blogPost => {
-            return <BlogPostItem className='collection-item'
-                        key={blogPost.id}
-                        id={blogPost.id}
-                        heading={blogPost.heading}
-                        author={blogPost.author}
-                        body={blogPost.body}
-                        date={blogPost.date}
-                    />
-        });
+        if(this.props.blogPosts) {
+            return this.props.blogPosts.blogPosts.map( blogPost => {
+                return <BlogPostItem className='collection-item'
+                            key={blogPost.id}
+                            id={blogPost.id}
+                            heading={blogPost.heading}
+                            author={blogPost.author}
+                            body={blogPost.body}
+                            date={blogPost.date}
+                        />
+            });
+        }
+        return (
+            <>
+                <h2 style={{ margin: '0 auto', padding: '30px'}}>No blog posts</h2>
+            </>
+        )
     }
     render() {
         if(this.state.loading) {
