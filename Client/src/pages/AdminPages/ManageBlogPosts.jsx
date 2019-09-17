@@ -118,6 +118,10 @@ const ManageBlogPost = ({ currentUser }) => {
                     <br/>
                     <br/>
                     <br/>
+                    <br/>
+                    <br/>
+                    <br/>
+                    <br/>
                     </div>
             </>
         );

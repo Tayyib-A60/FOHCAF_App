@@ -46,7 +46,7 @@ class BlogPage extends React.Component {
     };
     
     renderBlogPosts = () => {
-        if(this.props.blogPosts) {
+        if(this.state.totalItems) {
             return this.props.blogPosts.blogPosts.map( blogPost => {
                 return <BlogPostItem className='collection-item'
                             key={blogPost.id}
@@ -60,7 +60,11 @@ class BlogPage extends React.Component {
         }
         return (
             <>
-                <h2 style={{ margin: '0 auto', padding: '30px'}}>No blog posts</h2>
+                <br/>
+                <br/>
+                <br/>
+                <h2 style={{ margin: '0 auto', padding: '10px'}}>No blog posts</h2>
+                <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
             </>
         )
     }
