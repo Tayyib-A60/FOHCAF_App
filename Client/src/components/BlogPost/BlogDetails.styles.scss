@@ -2,7 +2,31 @@
     margin-top: 2rem !important;
     width: 75% !important;
     margin: 7rem 170px 3rem 170px !important;
+
+    @media only screen and (max-width: 600px) {
+        width: 85vw !important;
+        margin: 5rem 1rem !important;
+      }
 }
+
+.md-h4 {
+    @media only screen and (max-width: 600px) {
+        font-size: 1rem;
+        display: inline-block;
+        text-align: center;
+        
+      }
+}
+
+.md-form {
+    @media only screen and (max-width: 600px) {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: stretch;
+    width: 100%;
+    }
+}
+
 .blog-cardImage {
     max-height: 60vh !important;
     width: 100% !important;

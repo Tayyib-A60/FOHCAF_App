@@ -1,7 +1,13 @@
 .collection-section {
   padding: 70px 0;
   position: relative;
+
+  @media only screen and (max-width: 600px) {
+    padding: 15px 0;
+  }
+
 }
+
 
 .collection-item {
     width: 26vw;
@@ -13,6 +19,15 @@
     align-items: center;
     position: relative;
 
+  @media only screen and (max-width: 600px) {
+    height: 200px;
+    width: 100%;
+    display: block;
+    text-align: center;
+    padding-bottom: 8rem;
+    
+  }
+
     .image {
       width: 100%;
       height: 75%;
@@ -20,6 +35,8 @@
       border-radius: 3px;
       background-position: center;
       margin-bottom: 5px;
+
+      
     }
 
     .custom-button {
@@ -45,7 +62,9 @@
     //   display: flex;
       justify-content: space-between;
       font-size: 18px;
-  
+      // @media only screen and (max-width: 600px) {
+      //   width: 70%;
+      //  }
       .name {
         width: 90%;
         margin-bottom: 15px;
@@ -55,9 +74,17 @@
   // .section {
   //   //   background-color: rgb(134, 134, 165) !important;
   // }
-  .blog-title {
+  .blog-title, .md-heading {
       font-size: 22px;
+
+      @media only screen and (max-width: 600px) {
+        font-size: 18px;
+        text-align: center;
+        display: block;
+        
+      }
   }
+  
   .post-link {
     color: wheat;
     

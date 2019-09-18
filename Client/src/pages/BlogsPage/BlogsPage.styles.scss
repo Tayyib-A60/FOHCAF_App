@@ -2,12 +2,27 @@
     display: flex;
     flex-direction: column;
     margin: 0 60px;
+
+    @media only screen and (max-width: 600px) {
+      margin: 0 30px;
+      padding: 0 1px;
+      align-items: center;
+      
+    }
   
     .items {
       display: grid;
       grid-template-columns: 1fr 1fr 1fr;
       grid-gap: 10px;
       // color: #24ec12;
+
+      @media only screen and (max-width: 600px) {
+        display: flex !important;
+        flex-direction: column;
+        width: 100%;
+        align-items: center;
+        
+      }
   
       & .collection-item {
         margin-bottom: 30px;
