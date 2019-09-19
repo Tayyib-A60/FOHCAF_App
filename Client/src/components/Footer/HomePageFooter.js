@@ -4,14 +4,15 @@ import { Link } from 'react-router-dom';
  
 // reactstrap components
 import { Container } from "reactstrap";
+import './Footer.styles.scss';
 
 const HomePageFooter = () => {
   return (
     <footer className="footer" data-background-color="black">
-      <Container>
+      <Container className="md-footer">
         <nav>
           <ul>
-            <li>
+            <li className="md-margin">
               <Link to='/'>
                 Contact us
               </Link>
@@ -23,7 +24,7 @@ const HomePageFooter = () => {
             </li>
           </ul>
         </nav>
-        <div className="copyright" id="copyright">
+        <div className="copyright md-copyright" id="copyright">
           © {new Date().getFullYear()}, Designed and Coded by{" "}
           <a href='https://www.linkedin.com/in/adesokan-toyeeb-taiwo-8b0038141/'>
             Toyeeb Adesokan

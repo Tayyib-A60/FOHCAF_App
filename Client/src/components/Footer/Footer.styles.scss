@@ -1,0 +1,20 @@
+.md-footer {
+    @media only screen and (max-width: 600px) {
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: center;
+        text-align: center;
+        padding: 0 3rem;
+    }
+}
+.md-copyright,  {
+    @media only screen and (max-width: 600px) {
+        margin-top: 1rem;
+    }
+}
+.md-margin {
+    @media only screen and (max-width: 600px) {
+        
+        margin-right: 3rem;
+    }
+}

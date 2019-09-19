@@ -21,7 +21,7 @@ class BlogPostItem extends React.Component {
         const { author, heading, id } = this.props; 
             if(this.state.loading) {
                 return (
-                    <div style={{ padding: '240px 50px 100px 600px' }}>
+                    <div className="md-wrapper" style={{ padding: '240px 50px 100px 600px' }}>
                         <Loader type="RevolvingDot"
                         color="blue"
                         height={1000}
@@ -64,7 +64,7 @@ class BlogPostItem extends React.Component {
                             }} />
                         <div className='collection-footer'>
                             <span className='blog-title'>{author}: </span>
-                            <span>{heading}</span> 
+                            <span className="md-heading">{heading}</span> 
                         </div>
                         </div>
                         </Link>

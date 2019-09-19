@@ -143,8 +143,8 @@ class BlogDetails extends React.Component {
                 {/* <CardImg className='blog-cardImage' alt="..." src={require('assets/img/9b727d99-8ef5-49e6-a311-909a0c628f0d.jpg')} top></CardImg> */}
                 <CardBody>
                 <BlogPostImages className='blog-cardImage' photos={this.state.photos}/>
-                <CardTitle tag="h4">{this.state.blogPost.author}: {this.state.blogPost.heading}</CardTitle>
-                <CardText>
+                <CardTitle tag="h4" className="md-h4">{this.state.blogPost.author}: {this.state.blogPost.heading}</CardTitle>
+                <CardText className="md-h4">
                     {this.state.blogPost.body}
                 </CardText>
                 <CardText>
@@ -175,8 +175,8 @@ class BlogDetails extends React.Component {
                 <Container>
                 <Row>
                 <Col className=" ml-auto mr-auto" lg="10" md="8">
-                    <h2>Do u care to leave a comment on the post?</h2>
-                    <Form>
+                    <h2 className="md-blog-head">Do u care to leave a comment on the post?</h2>
+                    <Form className="md-form">
                     <FormGroup>
                     <InputGroup>
                     <Input
@@ -193,7 +193,7 @@ class BlogDetails extends React.Component {
                     </FormGroup>
                     <FormGroup>
                     <div className="textarea-container">
-                        <Input style={{maxHeight: '300px'}}
+                        <Input className="md-query" style={{maxHeight: '300px'}}
                             cols="80"
                             name="commentMade"
                             value={this.state.commentMade}

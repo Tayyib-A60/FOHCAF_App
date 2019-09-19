@@ -77,7 +77,7 @@ class CreateBlog extends React.Component {
                 <Container>
                 <Row>
                 <Col className=" ml-auto mr-auto" lg="10" md="8">
-                    <h2>Create a blog post</h2>
+                    <h2 className="md-blog-head">Create a blog post</h2>
                 <Form>
                     <FormGroup>
                     <InputGroup>
@@ -106,7 +106,7 @@ class CreateBlog extends React.Component {
                     </FormGroup>
                     <FormGroup>
                     <div className="textarea-container">
-                        <Input style={{maxHeight: '300px'}}
+                        <Input className="md-query" style={{maxHeight: '300px'}}
                             cols="80"
                             name="body"
                             placeholder="The body of the blog post goes here..."
