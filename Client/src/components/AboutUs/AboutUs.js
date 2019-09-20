@@ -146,7 +146,7 @@ const AboutUs = () =>  {
                       className="rounded-circle img-fluid img-raised"
                       src={require("assets/img/faysol.jpg")}
                     ></img>
-                    <h4 className="title">Faysol O. Dahoud</h4>
+                    <h4 className="title">Faysol Oluwakemi</h4>
                     <h5 className="category text-info">Founder/C.E.O</h5>
                     <h5 className="">
                     Lorem ipsum dolor sit amet consectetur adipisicing elit. Natus eveniet quam minima quaerat voluptate, molestiae dolorem deserunt et eius. Magnam non, exercitationem quidem laudantium nostrum necessitatibus architecto esse facilis inventore.

@@ -40,7 +40,7 @@ class BlogPostItem extends React.Component {
                     <div className='collection-item'>
                         <div className='image'
                         style={{ 
-                            backgroundImage: `url(https://localhost:5001/uploads/${this.state.photoUrl})`
+                            backgroundImage: `url(http://localhost:5001/uploads/${this.state.photoUrl})`
                             }} />
                         <div className='collection-footer'>
                             <span className='blog-title'>{author}: </span>

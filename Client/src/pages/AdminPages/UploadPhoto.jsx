@@ -54,7 +54,7 @@ class UploadPhoto extends React.Component {
                     <img
                     alt="..."
                     className="rounded img-raised"
-                    src={`https://localhost:5001/uploads/${photo.fileName}`}
+                    src={`http://localhost:5001/uploads/${photo.fileName}`}
                     ></img>
                     <Button onClick={() => this.makeMainPhoto(photo) } color='success' disabled={photo.isMain}>IsMain</Button>
                     <Button onClick={() => this.deletePhoto(photo) } color='danger'>Delete</Button>
