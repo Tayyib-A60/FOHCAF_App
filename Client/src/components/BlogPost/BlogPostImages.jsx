@@ -66,7 +66,7 @@ const BlogPostImages = ({photos}) => {
               onLoadedData={stopAnimation}
               key={item.id}
             >
-              <img src={`https://localhost:5001/uploads/${item.fileName}`} alt={item.fileName} />
+              <img src={`http://localhost:5000/uploads/${item.fileName}`} alt={item.fileName} />
               <div className="carousel-caption d-none d-md-block">
                 <h5>{item.caption}</h5>
               </div>
