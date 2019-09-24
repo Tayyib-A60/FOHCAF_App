@@ -39,8 +39,11 @@ class SingleMessage extends React.Component {
         };
 
         sendSingleMessageAPI(message).then(res => {
+            console.log(res);
+            
             if(res.status === 200) {
                 notify.show('Message sent successfully', 'success', 20000);
+                this.setState({ subject: '', fromName: '', fromEmail: '', toName: '', toEmail: '', message: ''});
               } 
         }).catch(err => {
             notify.show(`Failed: ${err.message}`, 'error', 20000);
