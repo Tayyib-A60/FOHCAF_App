@@ -180,6 +180,7 @@ class BlogDetails extends React.Component {
                     <FormGroup>
                     <InputGroup>
                     <Input
+                        className="md-width"
                         aria-describedby="madeBy"
                         id="madeBy"
                         name='madeBy'
