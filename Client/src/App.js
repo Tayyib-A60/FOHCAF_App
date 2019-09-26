@@ -22,7 +22,7 @@ import { createStructuredSelector } from 'reselect';
 import { selectCurrentUser } from 'redux/user/user.selector';
 
 const App = ({ currentUser }) =>  {
-    console.log(currentUser);
+    // console.log(currentUser);
     return (
     <div>
         <Navbar />

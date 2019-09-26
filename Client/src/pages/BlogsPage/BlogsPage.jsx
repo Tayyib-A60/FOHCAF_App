@@ -15,20 +15,38 @@ class BlogPage extends React.Component {
     state = {
         pageSize: 5,
         currentPage: 1,
-        totalItems: null,
+        totalItems: 0,
         loading: true
     };
+
     getBlogPosts = async () => {
         const queryParams = {
             pageSize: this.state.pageSize,
             currentPage: this.state.currentPage
         };
-        const blogs = await fetchBlogPostsAPI(queryParams);
-        this.setState({ totalItems: blogs.data.totalItems, loading: false });
-        this.props.fetchBlogPosts(blogs.data);
+        fetchBlogPostsAPI(queryParams).then(
+            async res => {
+                const blogs = res.data;
+                await this.setState({ totalItems: blogs.totalItems, loading: false });
+                this.props.fetchBlogPosts(blogs);
+            }
+        )
+        
     }
+    
     async componentDidMount() {
-        this.getBlogPosts();        
+        const queryParams = {
+            pageSize: this.state.pageSize,
+            currentPage: this.state.currentPage
+        };
+        fetchBlogPostsAPI(queryParams).then(
+            async res => {
+                const blogs = res.data;
+                await this.setState({ totalItems: blogs.totalItems, loading: false });
+                this.props.fetchBlogPosts(blogs);
+            }
+        );   
+          
     }
     showPagination = () => {
         if(this.state.totalItems) {
@@ -46,7 +64,8 @@ class BlogPage extends React.Component {
     };
     
     renderBlogPosts = () => {
-        if(this.state.totalItems) {
+        while(this.state.totalItems > 0) {
+            
             return this.props.blogPosts.blogPosts.map( blogPost => {
                 return <BlogPostItem className='collection-item'
                             key={blogPost.id}
