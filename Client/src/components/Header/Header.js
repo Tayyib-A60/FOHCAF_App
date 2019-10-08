@@ -24,7 +24,7 @@ const Header = () => {
 
   return (
     <>
-      <div className="page-header clear-filter" filter-color="blue">
+      <div style={{ marginTop: '-2.5rem', zIndex: -9 }} className="page-header clear-filter" filter-color="blue">
         <div
           className="page-header-image"
           style={{
@@ -42,28 +42,6 @@ const Header = () => {
             <h1 className="h1-seo">FOHCAF</h1>
             <h3>Get Informed Get Healthy </h3>
           </div>
-          {/* <h6 className="category category-absolute">
-            Designed by{" "}
-            <a href="http://invisionapp.com/?ref=creativetim" target="_blank">
-              <img
-                alt="..."
-                className="invision-logo"
-                src={require("assets/img/invision-white-slim.png")}
-              ></img>
-            </a>
-            . Coded by{" "}
-            <a
-              href="https://www.creative-tim.com?ref=nukr-index-header"
-              target="_blank"
-            >
-              <img
-                alt="..."
-                className="creative-tim-logo"
-                src={require("assets/img/creative-tim-white-slim2.png")}
-              ></img>
-            </a>
-            .
-          </h6> */}
         </Container>
       </div>
     </>

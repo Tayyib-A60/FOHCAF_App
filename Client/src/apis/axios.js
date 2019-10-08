@@ -1,5 +1,5 @@
 import axios from 'axios';
 
 export default axios.create({
-    baseURL: 'http://localhost:5000/api'
+    baseURL: 'http://adesokantayyib-001-site1.atempurl.com/api'
 });

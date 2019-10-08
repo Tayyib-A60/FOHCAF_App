@@ -27,7 +27,7 @@ class CreateBlog extends React.Component {
     };
     async componentDidMount() {
         console.log(this.props);
-        
+        document.documentElement.classList.remove('nav-open');
         if(this.props.match) {
             const blogPostId = this.props.match.params.id;
             const res = await fetchBlogPostAPI(blogPostId);

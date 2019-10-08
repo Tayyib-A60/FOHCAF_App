@@ -56,7 +56,7 @@ const IndexNavbar = (props) => {
           }}
         />
       ) : null}
-      <Navbar className={`fixed-top ${navbarColor} `} expand="lg" color="info">
+      <Navbar className={`fixed-top `} expand="lg" color="info">
         <Container>
           <div className="navbar-translate">
             <Link to='/'>
@@ -79,9 +79,9 @@ const IndexNavbar = (props) => {
               aria-expanded={collapseOpen}
               type="button"
             >
-              <span className="navbar-toggler-bar top-bar"></span>
-              <span className="navbar-toggler-bar middle-bar"></span>
-              <span className="navbar-toggler-bar bottom-bar"></span>
+              <span className="navbar-toggler-bar top-bar toggler"></span>
+              <span className="navbar-toggler-bar middle-bar toggler"></span>
+              <span className="navbar-toggler-bar bottom-bar toggler"></span>
             </button>
           </div>
           <Collapse
@@ -106,13 +106,12 @@ const IndexNavbar = (props) => {
                     currentUser? 
                     <Link to='/login' >Logout</Link> :
                     <Link to='/login'>Login</Link>
-
                   }
                 </NavLink>
               </NavItem>
               <NavItem>
                 <NavLink
-                  href="https://twitter.com/CreativeTim?ref=creativetim"
+                  href="https://twitter.com"
                   target="_blank"
                   id="twitter-tooltip"
                 >

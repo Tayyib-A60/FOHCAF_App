@@ -23,7 +23,7 @@ import { signInUser, signOutUser } from '../../redux/user/user.actions';
 import { createUserAPI, signInAPI } from '../../apis/fohcafapis';
 import { connect } from 'react-redux';
 import Notifications, {notify} from 'react-notify-toast';
-
+import Loader from 'react-loader-spinner';
 
 class Login extends React.Component {
   constructor(props) {
@@ -33,7 +33,8 @@ class Login extends React.Component {
         name: '',
         email: '',
         password: '',
-        wantToSignIn: true
+        wantToSignIn: true,
+        loading: false
     };
 }
   componentDidMount() {
@@ -47,23 +48,27 @@ class Login extends React.Component {
   signInOrCreateUser = async event => {
     event.preventDefault();
     const { name, email, password } = this.state;
+    this.setState({ loading: true });
     if (this.state.wantToSignIn) {
        signInAPI({ email, password }).then(loggedInUser => {
            this.props.signInUser(loggedInUser.data);
            if(loggedInUser.status === 200) {
+             this.setState({ loading: false });
              notify.show('Login successful', 'success', 20000);
-           }
-         }).catch(err => {
-           notify.show('Login failed', 'error', 20000);
-         });
-         return;
-    } 
-    createUserAPI({ name, email, password }).then(res => {
-        if(res.status === 200) {
-          notify.show('Sign up successful', 'success', 20000);
+            }
+          }).catch(err => {
+            this.setState({ loading: false });
+            notify.show('Login failed', 'error', 20000);
+          });
+          return;
         } 
-      }).catch(err => {
-
+        createUserAPI({ name, email, password }).then(res => {
+          if(res.status === 200) {
+            this.setState({ loading: false });
+            notify.show('Sign up successful', 'success', 20000);
+          } 
+        }).catch(err => {
+          this.setState({ loading: false });
           notify.show('Sign up failed', 'error', 20000);
         });
   };
@@ -81,11 +86,27 @@ class Login extends React.Component {
   }
 
   render () {
+    if(this.state.loading) {
+      return (
+          <div style={{ padding: '240px 50px 100px 600px', zIndex: '10000' }}>
+              <Loader type="RevolvingDot"
+              color="blue"
+              height={1000}
+              width={1000}
+              timeout={300000} 
+               />
+          </div>
+      );
+  }
     if(this.props.currentUser) {
       return (
         <>
         <Notifications options={{zIndex: 500, top: '450px'}} />
-        <div style={{ paddingTop: '250px'}}>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+        <div style={{ paddingTop: '250px', marginTop: '-5rem'}}>
           <Container>
               <Col className="ml-auto mr-auto" md="4">
                 <Card className="card-login card-plain">
@@ -106,17 +127,26 @@ class Login extends React.Component {
     return (
       <>
       <Notifications options={{zIndex: 500, top: '450px'}} />
-  <div className="content">
+  <div className="content" style={{ marginTop: '-5rem' }}>
+    <br/>
+    <br/>
+    <br/>
+    <br/>
+    <br/>
+    <br/>
+    <br/>
+    <br/>
+    <br/>
             <Container>
               <Col className="ml-auto mr-auto" md="4">
                 <Card className="card-login card-plain">
                   <Form onSubmit={this.createUser} className="form">
                     <CardHeader className="text-center">
                       <div className="logo-container">
-                        <img
+                        {/* <img
                           alt="..."
                           src={require("assets/img/now-logo.png")}
-                        ></img>
+                        ></img> */}
                       </div>
                     </CardHeader>
                     <CardBody>
@@ -196,13 +226,13 @@ class Login extends React.Component {
                     <CardFooter className="text-center">
                       <div className="pull-left">
                         <h6>
-                          <a
+                          {/* <a
                             className="link"
                             href="#pablo"
                             onClick={this.wantToCreatAccount}
                           >
                             Create Account
-                          </a>
+                          </a> */}
                         </h6>
                       </div>
                       <div className="pull-right">

@@ -3,25 +3,24 @@
     width: 75% !important;
     margin: 7rem 170px 3rem 170px !important;
 
-    @media only screen and (max-width: 600px) {
+    @media only screen and (max-width: 700px) {
         width: 85vw !important;
         margin: 5rem 1rem !important;
       }
 }
 
 .md-h4 {
-    @media only screen and (max-width: 600px) {
+    @media only screen and (max-width: 700px) {
         font-size: 1rem;
-        display: inline-block;
-        text-align: center;
+        text-align: justify;
+        
       }
 }
 
 .md-form {
-    @media only screen and (max-width: 600px) {
+    @media only screen and (max-width: 700px) {
     display: flex;
     flex-wrap: wrap;
-    align-items: stretch;
     width: 100%;
     }
 }

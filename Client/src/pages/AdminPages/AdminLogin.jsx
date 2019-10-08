@@ -17,7 +17,7 @@ const AdminLogin = () => {
   });
   return (
     <>
-      <div className="page-header clear-filter" filter-color="blue">
+      <div className="page-header clear-filter" filter-color="blue" style={{marginTop: '-1.4rem', zIndex: 5 }}>
         <div
           className="page-header-image"
           style={{

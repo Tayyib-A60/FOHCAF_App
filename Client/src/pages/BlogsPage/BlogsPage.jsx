@@ -39,6 +39,7 @@ class BlogPage extends React.Component {
             pageSize: this.state.pageSize,
             currentPage: this.state.currentPage
         };
+        document.documentElement.classList.remove('nav-open');
         fetchBlogPostsAPI(queryParams).then(
             async res => {
                 const blogs = res.data;

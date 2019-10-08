@@ -50,6 +50,7 @@ class BlogDetails extends React.Component {
         const blogPost = await fetchBlogPostAPI(id);
         const photos = await fetchBlogPostPhotos(id);
         const comments = await this.fetchComments(id);
+        document.documentElement.classList.remove('nav-open');
         this.setState({ 
             blogPost: blogPost.data,
             photos: photos.data,

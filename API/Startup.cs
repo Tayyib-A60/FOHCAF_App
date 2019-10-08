@@ -42,10 +42,11 @@ namespace api
             services.AddAutoMapper();
             services.Configure<AppSettings>(Configuration.GetSection("AppSettings"));
             services.Configure<PhotoSettings>(Configuration.GetSection("PhotoSettings"));
-            services.AddDbContext<FOHCAFDbContext>(options => {
+            services.AddDbContext<FOHCAFDbContext>(options =>
+            {
                 string connectionString;
                 var environmentVariable = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONEMT");
-                    connectionString = Configuration.GetConnectionString("DefaultConnection");
+                connectionString = Configuration.GetConnectionString("DefaultConnection");
                 options.UseSqlServer(connectionString);
             });
             var appSettings = appSettingsSection.Get<AppSettings>();

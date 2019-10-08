@@ -5,3 +5,10 @@ a, a:hover {
 .link:hover {
     text-decoration: none;
 }
+.toggler {
+    z-index: 10000 !important;
+    background-color: rgb(7, 6, 6) !important;
+    // color: #03a1e099;
+    font-weight: 900;
+    font-size: 300%;
+}

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+This file is used by the publish/package process of your Web project. You can customize the behavior of this process
+by editing this MSBuild file. In order to learn more about this please visit https://go.microsoft.com/fwlink/?LinkID=208121. 
+-->
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <TimeStampOfAssociatedLegacyPublishXmlFile />
+    <EncryptedPassword>AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAA+apd80LRykS4ucQpnvog6AAAAAACAAAAAAAQZgAAAAEAACAAAACol2dp0kOBT44YHdO7dn1Djuy2/B8prGLT7H0OuLplAwAAAAAOgAAAAAIAACAAAABAQQS61LWlCDEmcpsjWm8A3PwtpDo/bkitck5jKSnoMiAAAACC2ShIaO1KSjKxY9VV95V6x+DQZadvbkKnG7rUDCubJEAAAABujo68pzZK+Q06w2iPErZ6YVgo0xzbh7nWy8h0Js3NPXaWp0/p/8E2GOGG9GGhmDnflgWXpppUy9z2jPjuzucg</EncryptedPassword>
+  </PropertyGroup>
+  <ItemGroup>
+    <DestinationConnectionStrings Include="DefaultConnection">
+      <Value>Data Source=SQL6007.site4now.net%3bInitial Catalog=DB_A4E289_adesokantayyib%3bUser Id=DB_A4E289_adesokantayyib_admin%3bPassword=adeSOKAN1913%3b</Value>
+    </DestinationConnectionStrings>
+  </ItemGroup>
+</Project>

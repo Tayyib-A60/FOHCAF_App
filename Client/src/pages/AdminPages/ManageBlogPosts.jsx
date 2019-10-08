@@ -30,9 +30,6 @@ const ManageBlogPost = ({ currentUser }) => {
     const [iconPills, setIconPills] = React.useState("1");
         return (
             <>
-            <div style={{padding: '2rem'}}>
-
-            </div>
             <div className="section section-tabs">
                 <Container>
                 <Row>
@@ -60,7 +57,7 @@ const ManageBlogPost = ({ currentUser }) => {
                                 setIconPills("2");
                                 }}
                             >
-                                <i class="fas fa-tasks"></i> Manage
+                                <i className="fas fa-tasks"></i> Manage
                             </NavLink>
                             </NavItem>
                             <NavItem>
@@ -84,7 +81,7 @@ const ManageBlogPost = ({ currentUser }) => {
                                 setIconPills("4");
                                 }}
                             >
-                                <i class="fas fa-envelope"></i> Single Message
+                                <i className="fas fa-envelope"></i> Single Message
                             </NavLink>
                             </NavItem>
                         </Nav>

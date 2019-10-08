@@ -111,7 +111,7 @@ const AboutUs = () =>  {
                     <h4 className="title">Adesokan Toyeeb</h4>
                     <h5 className="category text-info">Software Engineer</h5>
                     <h5 className="">
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Natus eveniet quam minima quaerat voluptate, molestiae dolorem deserunt et eius. Magnam non, exercitationem quidem laudantium nostrum necessitatibus architecto esse facilis inventore.
+                    Toyeeb is a Software Engineer, Blockchain Enthusiast, and a Business Innovator with core visions on revolutionizing the use of Technology to create effective solutions to drive businesses. Technologies I have worked with include JavaScript, ASP.NET Core, Angular, React, Solidity, Ethereum Smart Contracts, HTML & CSS, SASS, Git (version control).
                     </h5>
                     <Button
                       className="btn-icon btn-round"
@@ -149,7 +149,7 @@ const AboutUs = () =>  {
                     <h4 className="title">Faysol Oluwakemi</h4>
                     <h5 className="category text-info">Founder/C.E.O</h5>
                     <h5 className="">
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Natus eveniet quam minima quaerat voluptate, molestiae dolorem deserunt et eius. Magnam non, exercitationem quidem laudantium nostrum necessitatibus architecto esse facilis inventore.
+                    Faysol Oluwakemi is a Heath Advocate, Broadcast Journalist, Producer, Presenter and On Air Personality. He attended Kunle Hamzat Institute of Practical Broadcasting where he earned a Diploma in Practical Broadcasting in the year 2011. His desire to become a professional broadcaster urged him to proceed to National Broadcast Academy, Ikeja Lagos where he graduated in 2016 with a Professional Certificate in Broadcast Journalism.
                     </h5>
                     <Button
                       className="btn-icon btn-round"
